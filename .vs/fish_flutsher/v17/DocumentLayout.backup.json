@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\code\\Game_Dev\\fish_flutsher\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|c:\\code\\game_dev\\fish_flutsher\\assets\\scripts\\collisiondetection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\collisiondetection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|c:\\code\\game_dev\\fish_flutsher\\assets\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainMenuManager.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\MainMenuManager.cs",
+              "RelativeDocumentMoniker": "Assets\\MainMenuManager.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\MainMenuManager.cs",
+              "RelativeToolTip": "Assets\\MainMenuManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T14:42:25.607Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CollisionDetection.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\CollisionDetection.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CollisionDetection.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\CollisionDetection.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CollisionDetection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T10:48:36.801Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
