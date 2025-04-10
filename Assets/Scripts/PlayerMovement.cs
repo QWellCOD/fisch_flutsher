@@ -3,6 +3,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f; // Geschwindigkeit der Bewegung
+    public float tiltAngle = 30f; // Maximaler Neigungswinkel in Grad
+    public float tiltSpeed = 5f; // Geschwindigkeit der Neigung
+
+    private float currentRotation = 0f; // Aktuelle Rotation des Fischs
 
     void Update()
     {
@@ -20,7 +24,22 @@ public class PlayerMovement : MonoBehaviour
             verticalInput = -1;
         }
 
-        // Anwenden der Bewegung
-        transform.Translate(Vector2.up * verticalInput * moveSpeed * Time.deltaTime);
+        // Anwenden der Bewegung im WELT-Koordinatensystem, unabhängig von der Rotation
+        transform.Translate(Vector2.up * verticalInput * moveSpeed * Time.deltaTime, Space.World);
+
+        // Kippwinkel berechnen
+        float targetRotation = 0f;
+
+        if (verticalInput != 0)
+        {
+            // Wenn Bewegung stattfindet, in Richtung der Bewegung kippen
+            targetRotation = verticalInput * tiltAngle;
+        }
+
+        // Sanfter Übergang zur Zielrotation
+        currentRotation = Mathf.Lerp(currentRotation, targetRotation, tiltSpeed * Time.deltaTime);
+
+        // rotation
+        transform.rotation = Quaternion.Euler(0, 0, currentRotation);
     }
 }

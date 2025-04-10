@@ -47,5 +47,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Far
+    uniqueID: 4116674457
+    locked: 0
+  - name: Sand
+    uniqueID: 1204967575
+    locked: 0
+  - name: Foreground
+    uniqueID: 2568750611
+    locked: 0
+  - name: Background
+    uniqueID: 3514416961
+    locked: 0
+  - name: Midground
+    uniqueID: 3890500993
+    locked: 0
+  - name: Player
+    uniqueID: 847693265
+    locked: 0
+  - name: Foreground
+    uniqueID: 1987348861
+    locked: 0
   m_RenderingLayers:
   - Default
