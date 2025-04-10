@@ -3,12 +3,40 @@
   "WorkspaceRootPath": "C:\\code\\Game_Dev\\fish_flutsher\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|c:\\code\\game_dev\\fish_flutsher\\assets\\scripts\\collisiondetection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\collisiondetection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\powerupspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\powerupspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\powerup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\powerup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\obstacleupdater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\obstacleupdater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\obstaclemovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\obstaclemovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\scoremanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scoremanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|C:\\code\\Game_Dev\\fish_flutsher\\assets\\scripts\\backgroundmusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DC83D3A-3406-D051-1411-AB11F7D58B95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\backgroundmusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,29 +54,112 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainMenuManager.cs",
-              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\MainMenuManager.cs",
-              "RelativeDocumentMoniker": "Assets\\MainMenuManager.cs",
-              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\MainMenuManager.cs",
-              "RelativeToolTip": "Assets\\MainMenuManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T14:42:25.607Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T14:35:50.469Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "CollisionDetection.cs",
               "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\CollisionDetection.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CollisionDetection.cs",
               "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\CollisionDetection.cs",
               "RelativeToolTip": "Assets\\Scripts\\CollisionDetection.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAkwFAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-09T10:48:36.801Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ObstacleUpdater.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\ObstacleUpdater.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ObstacleUpdater.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\ObstacleUpdater.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ObstacleUpdater.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T13:32:11.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ObstacleMovement.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\ObstacleMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ObstacleMovement.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\ObstacleMovement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ObstacleMovement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T13:32:07.672Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PowerUpSpawner.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\PowerUpSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PowerUpSpawner.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\PowerUpSpawner.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PowerUpSpawner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T13:31:58.703Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BackgroundMusic.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\BackgroundMusic.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BackgroundMusic.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\BackgroundMusic.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BackgroundMusic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-20T13:12:25.615Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MainMenuManager.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\MainMenuManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MainMenuManager.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\MainMenuManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MainMenuManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T13:23:57.9Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ScoreManager.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\ScoreManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScoreManager.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\ScoreManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScoreManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T17:12:20.969Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PowerUp.cs",
+              "DocumentMoniker": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\PowerUp.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PowerUp.cs",
+              "ToolTip": "C:\\code\\Game_Dev\\fish_flutsher\\Assets\\Scripts\\PowerUp.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PowerUp.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T14:56:35.48Z"
             }
           ]
         }

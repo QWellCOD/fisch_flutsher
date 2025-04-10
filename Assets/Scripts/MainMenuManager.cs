@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public void PlayGame()
+    public void PlayGame(AudioMixerSnapshot snapshot)
     {
         Debug.Log("Play button clicked! Loading Game Scene...");
-        SceneManager.LoadScene("GameScene"); // Passe den Namen der Spielszene an
+        snapshot.TransitionTo(1);
+        SceneManager.LoadScene("GameScene");
     }
 }

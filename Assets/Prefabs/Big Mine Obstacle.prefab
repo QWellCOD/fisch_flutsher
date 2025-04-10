@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 3442833210617204352}
   - component: {fileID: 6826971054978924668}
   - component: {fileID: 8900107879232683144}
+  - component: {fileID: 4951544196252042334}
   m_Layer: 8
   m_Name: mine-big
   m_TagString: Obstacle
@@ -198,3 +199,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+--- !u!114 &4951544196252042334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8304063333420855187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a0a6f40effa7e4e862970031d6677c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

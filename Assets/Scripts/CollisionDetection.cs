@@ -1,63 +1,163 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using UnityEngine.Audio;
 
 public class CollisionDetection : MonoBehaviour
 {
-    public GameObject gameOverScreen; // Verweis auf das Game Over UI
+    [Header("UI References")]
+    //public GameObject gameOverScreen;
+    public GameObject shieldVisual;
+
+    [Header("Settings")]
+    [SerializeField] private float speedBoostMultiplier = 2f;
+
+    private bool isShieldActive = false;
+    private float shieldDurationRemaining = 0f;
+    private PlayerMovement movement;
+    private float baseMoveSpeed;
+    public AudioMixerSnapshot snapshot;
+
+    private bool isSpeedBoostActive = false;
+    private float speedBoostDurationRemaining = 0f;
+
+    public ParticleSystem speedBoostParticles;
+
+    void Start()
+    {
+        movement = GetComponent<PlayerMovement>();
+        baseMoveSpeed = movement.moveSpeed;
+
+        if (shieldVisual) shieldVisual.SetActive(false);
+    }
+
+    void Update()
+    {
+        UpdateShieldTimer();
+        UpdateSpeedBoostTimer();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Prüfen, ob das kollidierte Objekt den Tag "Obstacle" hat
-        if (other.CompareTag("Obstacle"))
-        {
-            Debug.Log("Collision with Obstacle detected!"); // Debug-Ausgabe zur Überprüfung
-            GameOver(); // Spiel beenden
-        }
-
-        //// Platz für weitere Tags (z. B. Gegner)
-        //if (other.CompareTag("Enemy"))
-        //{
-        //    Debug.Log("Collision with Enemy detected!");
-        //    // Weitere Logik für Gegner hier einfügen
-        //}
-
-        //if (other.CompareTag("PowerUp"))
-        //{
-        //    Debug.Log("Collision with PowerUp detected!");
-        //    // Logik für PowerUps hier einfügen
-        //}
-
+        HandleCollision(other.tag, other.gameObject);
     }
 
-    void GameOver()
+    private void HandleCollision(string tag, GameObject obj)
     {
-        // Aktiviert das Game Over UI
-        if (gameOverScreen != null)
+        switch (tag)
         {
-            Debug.Log("Activating Game Over Screen...");
-            gameOverScreen.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("Game Over Panel is not assigned!");
-        }
+            case "Obstacle":
+                if (!isShieldActive && !isSpeedBoostActive)
+                    TriggerGameOver();
+                else
+                    Debug.Log("Protected by shield/speedboost!");
+                break;
 
-        // Spiel pausieren
-        Time.timeScale = 0;
+            //case "Obstacle":
+            //    if (!isShieldActive) TriggerGameOver();
+            //    else Debug.Log("Shield blocked obstacle!");
+            //    break;
+
+            case "Ground":
+            case "Ceiling":
+                TriggerGameOver();
+                break;
+
+            case "PowerUp":
+                ApplyPowerUp(obj.GetComponent<PowerUp>());
+                Destroy(obj);
+                break;
+        }
     }
 
-    public void RestartGame()
+    private void UpdateShieldTimer()
     {
-        // Spiel neu starten
-        Debug.Log("Restart button clicked!");
-        Time.timeScale = 1; // Zeit wieder aktivieren
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Aktuelle Szene neu laden
+        if (!isShieldActive) return;
+
+        shieldDurationRemaining -= Time.deltaTime;
+        if (shieldDurationRemaining <= 0f)
+        {
+            DeactivateShield();
+        }
     }
 
-    public void HomeScene()
+    private void UpdateSpeedBoostTimer()
     {
-        // Zurück zum Hauptmenü
-        Time.timeScale = 1; // Zeit wieder aktivieren
-        SceneManager.LoadScene("HomeScene"); // Passe den Szenennamen an
+        if (!isSpeedBoostActive) return;
+
+        speedBoostDurationRemaining -= Time.deltaTime;
+        if (speedBoostDurationRemaining <= 0f)
+        {
+            DeactivateSpeedBoost();
+        }
+    }
+
+    public void ActivateSpeedBoost(float duration)
+    {
+        Debug.Log("Game Speed boost activated!");
+        GameManager.Instance.BoostGameSpeed(speedBoostMultiplier);
+
+        isSpeedBoostActive = true;
+        speedBoostDurationRemaining = duration;
+
+        if (speedBoostParticles) speedBoostParticles.Play();
+    }
+
+    public void DeactivateSpeedBoost()
+    {
+        GameManager.Instance.ResetGameSpeed();
+
+        isSpeedBoostActive = false;
+        Debug.Log("Game Speed boost deactivated!");
+
+        if (speedBoostParticles) speedBoostParticles.Stop();
+    }
+
+    private void ApplyPowerUp(PowerUp powerUp)
+    {
+        if (!powerUp) return;
+
+        switch (powerUp.powerUpType)
+        {
+            case PowerUp.PowerUpType.Shield:
+                ActivateShield(powerUp.duration);
+                break;
+
+            case PowerUp.PowerUpType.SpeedBoost:
+                ActivateSpeedBoost(powerUp.duration);
+                break;
+        }
+    }
+
+    public void ActivateShield(float duration)
+    {
+        isShieldActive = true;
+        shieldDurationRemaining = duration;
+        if (shieldVisual) shieldVisual.SetActive(true);
+    }
+
+    public void DeactivateShield()
+    {
+        isShieldActive = false;
+        shieldDurationRemaining = 0f;
+        if (shieldVisual) shieldVisual.SetActive(false);
+    }
+
+    //public void ActivateSpeedBoost(float duration) 
+    //{
+    //    Debug.Log("Speed boost activated!");
+    //    movement.moveSpeed *= speedBoostMultiplier;
+    //    Invoke(nameof(ResetSpeedBoost), duration);
+    //}
+
+    /// <summary>
+    /// This method triggers the game over sequence.
+    /// It activates the game over screen and pauses the game by setting the time scale to 0.
+    /// </summary>
+    private void TriggerGameOver()
+    {
+        Debug.Log("Player died!");
+        snapshot.TransitionTo(0);
+        SceneManager.LoadScene("GameOverScene");
     }
 }
