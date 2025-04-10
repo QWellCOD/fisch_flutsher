@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4840383729472110088}
+  - component: {fileID: 2101120843546417834}
   m_Layer: 8
   m_Name: Big Mine Obstacle
   m_TagString: Obstacle
@@ -32,6 +33,18 @@ Transform:
   - {fileID: 8976525024068143063}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &2101120843546417834
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110125385102363533}
+  m_Enabled: 1
+  m_SortingLayerID: -404466303
+  m_SortingLayer: 5
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &8304063333420855187
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b7e2352ed3fc44399ec904ae891de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!114 &4951544196252042334
 MonoBehaviour:
   m_ObjectHideFlags: 0

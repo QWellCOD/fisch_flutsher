@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3074652827292844309}
   - component: {fileID: 1648612753853364275}
   - component: {fileID: 7900192293269214144}
+  - component: {fileID: 99285509869177688}
   m_Layer: 0
   m_Name: power_up_boost
   m_TagString: PowerUp
@@ -166,3 +167,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53a0a6f40effa7e4e862970031d6677c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &99285509869177688
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399020010129720060}
+  m_Enabled: 1
+  m_SortingLayerID: -404466303
+  m_SortingLayer: 5
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

@@ -6,11 +6,22 @@ public class ParallaxEffect : MonoBehaviour
     [SerializeField] private float scrollSpeed = 5f;
     [SerializeField][Range(0f, 1f)] private float parallaxStrength = 1f;
 
+    // Zusätzlicher Puffer außerhalb des sichtbaren Bereichs (in Bildschirmbreiten)
+    [SerializeField] private float offscreenBuffer = 1.5f;
+
     private float spriteWidth;
     private List<Transform> sprites = new List<Transform>();
     private float screenWidth;
+    private float leftBoundary;
+    private float rightBoundary;
 
-    private void Start()
+    private void Awake()
+    {
+        // In Awake statt Start, damit es vor dem ersten Frame ausgeführt wird
+        InitializeSprites();
+    }
+
+    private void InitializeSprites()
     {
         // Alle Kind-Sprites sammeln
         for (int i = 0; i < transform.childCount; i++)
@@ -29,19 +40,56 @@ public class ParallaxEffect : MonoBehaviour
 
         // Kamera-Breite in Weltkoordinaten berechnen
         screenWidth = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x -
-                     Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+                      Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
 
-        // Sprites nebeneinander positionieren
-        ArrangeSprites();
+        // Grenzen berechnen mit Puffer
+        leftBoundary = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
+        rightBoundary = Camera.main.transform.position.x + (screenWidth / 2) + (spriteWidth * offscreenBuffer);
+
+        // Prüfen ob genug Sprites vorhanden sind, um die Szene + Puffer zu füllen
+        EnsureEnoughSprites();
+
+        // Sprites positionieren
+        ArrangeSpritesWithBuffer();
     }
 
-    private void ArrangeSprites()
+    private void EnsureEnoughSprites()
     {
-        // Sprites in einer Reihe positionieren
+        // Berechnen, wie viele Sprites wir benötigen, um den Bildschirm + Puffer zu füllen
+        float totalWidthNeeded = screenWidth + (2 * screenWidth * offscreenBuffer);
+        int spritesNeeded = Mathf.CeilToInt(totalWidthNeeded / spriteWidth);
+
+        while (sprites.Count < spritesNeeded)
+        {
+            // Klone das erste Sprite und füge es zur Liste hinzu
+            Transform newSprite = Instantiate(sprites[0], transform);
+            sprites.Add(newSprite);
+        }
+
+        Debug.Log($"Benötige {spritesNeeded} Sprites für den Hintergrund, {sprites.Count} vorhanden.");
+    }
+
+    private void ArrangeSpritesWithBuffer()
+    {
+        // Startposition ist links vom sichtbaren Bereich
+        float startX = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
+
+        // Sprites von links nach rechts anordnen, mit Puffer außerhalb des sichtbaren Bereichs
         for (int i = 0; i < sprites.Count; i++)
         {
             sprites[i].position = new Vector3(
-                sprites[0].position.x + i * spriteWidth,
+                startX + (i * spriteWidth),
+                sprites[i].position.y,
+                sprites[i].position.z
+            );
+        }
+
+        float overlap = spriteWidth * 0.05f; // 5% Überlappung
+
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            sprites[i].position = new Vector3(
+                startX + (i * (spriteWidth - overlap)),
                 sprites[i].position.y,
                 sprites[i].position.z
             );
@@ -53,38 +101,54 @@ public class ParallaxEffect : MonoBehaviour
         // Bewegungsgeschwindigkeit berechnen
         float movement = scrollSpeed * parallaxStrength * Time.deltaTime;
 
+        // fps unabhängig
+        float smoothDeltaTime = Time.smoothDeltaTime;
+
+
+        // Grenzen aktualisieren basierend auf der aktuellen Kameraposition
+        leftBoundary = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
+        rightBoundary = Camera.main.transform.position.x + (screenWidth / 2) + (spriteWidth * offscreenBuffer);
+
         // Alle Sprites bewegen
         foreach (var sprite in sprites)
         {
             sprite.Translate(Vector3.left * movement);
-
-            // Wenn Sprite am linken Rand verschwindet, rechts wieder einfügen
             RepositionSpriteIfNeeded(sprite);
         }
+
     }
 
     private void RepositionSpriteIfNeeded(Transform sprite)
     {
-        // Wenn das Sprite komplett aus dem Bild links ist
-        if (sprite.position.x + spriteWidth / 2 < Camera.main.transform.position.x - screenWidth / 2)
+        // Wenn das Sprite zu weit links ist (komplett außerhalb des sichtbaren Bereichs + Puffer)
+        if (sprite.position.x + (spriteWidth * 0.5f) < leftBoundary)
         {
             // Finde die rechteste Position aller Sprites
             float rightmostX = -Mathf.Infinity;
+            Transform rightmostSprite = null;
+
             foreach (var s in sprites)
             {
-                if (s == sprite) continue; // Aktuelles Sprite überspringen
+                if (s == sprite) continue;
                 if (s.position.x > rightmostX)
                 {
                     rightmostX = s.position.x;
+                    rightmostSprite = s;
                 }
             }
 
-            // Platziere das Sprite rechts vom aktuell rechtesten Sprite
-            sprite.position = new Vector3(
-                rightmostX + spriteWidth,
-                sprite.position.y,
-                sprite.position.z
-            );
+            if (rightmostSprite != null)
+            {
+                // Platziere das Sprite direkt rechts vom aktuell rechtesten Sprite
+                sprite.position = new Vector3(
+                    rightmostSprite.position.x + spriteWidth,
+                    sprite.position.y,
+                    sprite.position.z
+                );
+
+                // Debug-Log, um die Repositionierung zu verfolgen
+                Debug.Log($"Sprite repositioniert: Von {leftBoundary} nach {sprite.position.x}");
+            }
         }
     }
 
@@ -93,32 +157,22 @@ public class ParallaxEffect : MonoBehaviour
         scrollSpeed = newSpeed;
     }
 
-    private void AdjustSpriteAlpha()
+    // Nur für Debug-Zwecke
+    private void OnDrawGizmos()
     {
-        // Transparenten Übergang zwischen den Sprites erstellen
-        foreach (var sprite in sprites)
-        {
-            SpriteRenderer renderer = sprite.GetComponent<SpriteRenderer>();
-            // Hier könntest du Fading an den Rändern implementieren
-            // renderer.material.SetFloat("_FadeEdge", 0.1f); // Benötigt einen speziellen Shader
-        }
-    }
+        if (!Application.isPlaying) return;
 
-    private void CreateEnoughSprites()
-    {
-        // Benötigte Anzahl an Sprites berechnen
-        int neededSprites = Mathf.CeilToInt((screenWidth * 2) / spriteWidth) + 1;
+        // Grenzen visuell darstellen
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(
+            new Vector3(leftBoundary, transform.position.y - 5, 0),
+            new Vector3(leftBoundary, transform.position.y + 5, 0)
+        );
 
-        // Stelle sicher, dass wir genug Sprites haben
-        if (sprites.Count < neededSprites)
-        {
-            int toAdd = neededSprites - sprites.Count;
-            for (int i = 0; i < toAdd; i++)
-            {
-                // Erstelle Kopien des ersten Sprites
-                Transform newSprite = Instantiate(sprites[0], transform);
-                sprites.Add(newSprite);
-            }
-        }
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(
+            new Vector3(rightBoundary, transform.position.y - 5, 0),
+            new Vector3(rightBoundary, transform.position.y + 5, 0)
+        );
     }
 }

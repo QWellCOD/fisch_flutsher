@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2754743577007619959}
+  - component: {fileID: 4816012215905318956}
   m_Layer: 8
   m_Name: Mine Obstacle
   m_TagString: Obstacle
@@ -32,6 +33,18 @@ Transform:
   - {fileID: 7051648389553393618}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &4816012215905318956
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088568462994071320}
+  m_Enabled: 1
+  m_SortingLayerID: -404466303
+  m_SortingLayer: 5
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6808357777523835163
 GameObject:
   m_ObjectHideFlags: 0
