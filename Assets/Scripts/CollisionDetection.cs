@@ -53,11 +53,6 @@ public class CollisionDetection : MonoBehaviour
                     Debug.Log("Protected by shield/speedboost!");
                 break;
 
-            //case "Obstacle":
-            //    if (!isShieldActive) TriggerGameOver();
-            //    else Debug.Log("Shield blocked obstacle!");
-            //    break;
-
             case "Ground":
             case "Ceiling":
                 TriggerGameOver();

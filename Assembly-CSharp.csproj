@@ -79,7 +79,6 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\BackgroundManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\FishBubbles.cs" />
     <Compile Include="Assets\Scripts\CollisionDetection.cs" />
   </ItemGroup>
   <ItemGroup>
