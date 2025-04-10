@@ -7,13 +7,16 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
 
     [Header("UI References")]
-    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text timeText; // Für die Zeitanzeige
+    [SerializeField] private TMP_Text scoreText; // Für die Punkteanzeige
     [SerializeField] private TMP_Text highscoreText;
 
     [Header("Settings")]
     [SerializeField] private float scoreIncreaseInterval = 1f;
+    [SerializeField] private int powerUpPoints = 5; // Punkte pro PowerUp
 
-    private int currentScore;
+    private int currentTimeScore; // Zeit-basierter Score
+    private int currentPointsScore; // PowerUp-basierter Score
     private int highscore;
     private float elapsedTime;
     private bool isGameActive = true;
@@ -43,8 +46,20 @@ public class ScoreManager : MonoBehaviour
 
     void InitializeUIReferences()
     {
+        // Suche nach den korrekten UI-Elementen in der Szene
+        timeText = GameObject.Find("TimeText")?.GetComponent<TMP_Text>();
         scoreText = GameObject.Find("ScoreText")?.GetComponent<TMP_Text>();
         highscoreText = GameObject.Find("HighscoreText")?.GetComponent<TMP_Text>();
+
+        // Falls das TimeText-Element nicht existiert, aber ScoreText vorhanden ist
+        if (timeText == null && scoreText != null)
+        {
+            Debug.LogWarning("TimeText nicht gefunden. Verwende vorhandenes ScoreText für die Zeit.");
+            timeText = scoreText;
+        }
+
+        UpdateTimeDisplay();
+        UpdateScoreDisplay();
         UpdateHighscoreDisplay();
     }
 
@@ -56,39 +71,59 @@ public class ScoreManager : MonoBehaviour
 
         if (elapsedTime >= scoreIncreaseInterval)
         {
-            currentScore += (int)(elapsedTime / scoreIncreaseInterval);
+            currentTimeScore += (int)(elapsedTime / scoreIncreaseInterval);
             elapsedTime %= scoreIncreaseInterval;
 
-            UpdateScoreDisplay();
+            UpdateTimeDisplay();
             CheckHighscore();
         }
     }
 
+    // PowerUps rufen diese Methode auf, wenn sie eingesammelt werden
+    public void AddPowerUpPoints()
+    {
+        currentPointsScore += powerUpPoints;
+        UpdateScoreDisplay();
+        CheckHighscore();
+    }
+
+    // Allgemeine Methode zum Hinzufügen von Punkten
     public void AddScore(int points)
     {
-        currentScore += points;
+        currentPointsScore += points;
         UpdateScoreDisplay();
         CheckHighscore();
     }
 
     public void ResetScore()
     {
-        currentScore = 0;
+        currentTimeScore = 0;
+        currentPointsScore = 0;
         elapsedTime = 0f;
+        UpdateTimeDisplay();
         UpdateScoreDisplay();
+    }
+
+    private void UpdateTimeDisplay()
+    {
+        if (timeText != null)
+            timeText.text = $"Time: {currentTimeScore}";
     }
 
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)
-            scoreText.text = $"Score: {currentScore}";
+            scoreText.text = $"Score: {currentPointsScore}";
     }
 
     private void CheckHighscore()
     {
-        if (currentScore > highscore)
+        // Highscore = Zeit + PowerUp-Punkte
+        int totalScore = currentTimeScore + currentPointsScore;
+
+        if (totalScore > highscore)
         {
-            highscore = currentScore;
+            highscore = totalScore;
             SaveHighscore();
             UpdateHighscoreDisplay();
         }
@@ -109,6 +144,11 @@ public class ScoreManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Highscore", highscore);
         PlayerPrefs.Save();
+    }
+
+    public int GetTotalScore()
+    {
+        return currentTimeScore + currentPointsScore;
     }
 
     public void GameOver()

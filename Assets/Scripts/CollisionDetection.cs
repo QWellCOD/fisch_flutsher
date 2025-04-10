@@ -122,6 +122,11 @@ public class CollisionDetection : MonoBehaviour
                 ActivateSpeedBoost(powerUp.duration);
                 break;
         }
+
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddPowerUpPoints();
+        }
     }
 
     public void ActivateShield(float duration)
@@ -138,12 +143,7 @@ public class CollisionDetection : MonoBehaviour
         if (shieldVisual) shieldVisual.SetActive(false);
     }
 
-    //public void ActivateSpeedBoost(float duration) 
-    //{
-    //    Debug.Log("Speed boost activated!");
-    //    movement.moveSpeed *= speedBoostMultiplier;
-    //    Invoke(nameof(ResetSpeedBoost), duration);
-    //}
+
 
     /// <summary>
     /// This method triggers the game over sequence.

@@ -2,34 +2,46 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public enum PowerUpType { Shield, SpeedBoost } // Verschiedene Arten von Power-Ups
-    public PowerUpType powerUpType; // Typ des aktuellen Power-Ups
-    public float duration = 5f; // Dauer des Effekts
-
-    private void OnTriggerEnter2D(Collider2D other)
+    // PowerUp-Typen als Enum definieren
+    public enum PowerUpType
     {
-        if (other.CompareTag("Player")) // Prüfen, ob der Spieler das Power-Up berührt
-        {
-            ApplyEffect(other.gameObject); // Effekt anwenden
-            Destroy(gameObject); // Power-Up entfernen
-        }
+        Shield,
+        SpeedBoost
     }
 
-    private void ApplyEffect(GameObject player)
-    {
-        CollisionDetection playerController = player.GetComponent<CollisionDetection>();
+    [SerializeField] public PowerUpType powerUpType; // Typ des PowerUps
+    [SerializeField] public float duration = 5f; // Dauer des PowerUp-Effekts
 
-        if (playerController != null)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
         {
-            switch (powerUpType)
+            // Punkte zum Score hinzufÃ¼gen
+            if (ScoreManager.Instance != null)
             {
-                case PowerUpType.Shield:
-                    playerController.ActivateShield(duration);
-                    break;
-                case PowerUpType.SpeedBoost:
-                    playerController.ActivateSpeedBoost(duration);
-                    break;
+                ScoreManager.Instance.AddPowerUpPoints();
             }
+
+            // PowerUp-Effekt direkt Ã¼ber CollisionDetection anwenden
+            CollisionDetection collisionDetection = collision.GetComponent<CollisionDetection>();
+            if (collisionDetection != null)
+            {
+                if (powerUpType == PowerUpType.SpeedBoost)
+                {
+                    collisionDetection.ActivateSpeedBoost(duration);
+                }
+                else if (powerUpType == PowerUpType.Shield)
+                {
+                    collisionDetection.ActivateShield(duration);
+                }
+            }
+            else
+            {
+                Debug.LogError("Keine CollisionDetection-Komponente am Player gefunden!");
+            }
+
+            // PowerUp zerstÃ¶ren
+            Destroy(gameObject);
         }
     }
 }

@@ -3,12 +3,17 @@ using System.Collections.Generic;
 
 public class ParallaxEffect : MonoBehaviour
 {
-    [SerializeField] private float scrollSpeed = 5f;
+    [Header("Scroll-Einstellungen")]
+    [SerializeField] private float baseScrollSpeed = 5f; // Basis-Geschwindigkeit
     [SerializeField][Range(0f, 1f)] private float parallaxStrength = 1f;
+    [SerializeField] private bool syncWithGameManager = true; // Automatische Synchronisierung
 
-    // Zusätzlicher Puffer außerhalb des sichtbaren Bereichs (in Bildschirmbreiten)
+    [Header("Layout-Einstellungen")]
     [SerializeField] private float offscreenBuffer = 1.5f;
+    [SerializeField] private bool enableOverlap = true;
+    [SerializeField] private float overlapPercentage = 0.05f; // 5% Überlappung
 
+    private float currentScrollSpeed;
     private float spriteWidth;
     private List<Transform> sprites = new List<Transform>();
     private float screenWidth;
@@ -17,8 +22,20 @@ public class ParallaxEffect : MonoBehaviour
 
     private void Awake()
     {
-        // In Awake statt Start, damit es vor dem ersten Frame ausgeführt wird
+        // Basis-Initialwerte setzen
+        currentScrollSpeed = baseScrollSpeed;
+
+        // Sprites initialisieren
         InitializeSprites();
+    }
+
+    private void Start()
+    {
+        // Initialen Wert vom GameManager holen
+        if (syncWithGameManager && GameManager.Instance != null)
+        {
+            currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
+        }
     }
 
     private void InitializeSprites()
@@ -38,30 +55,33 @@ public class ParallaxEffect : MonoBehaviour
         // Breite des ersten Sprites ermitteln
         spriteWidth = sprites[0].GetComponent<SpriteRenderer>().bounds.size.x;
 
-        // Kamera-Breite in Weltkoordinaten berechnen
+        // Kamera-Breite berechnen
         screenWidth = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x -
                       Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
 
-        // Grenzen berechnen mit Puffer
-        leftBoundary = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
-        rightBoundary = Camera.main.transform.position.x + (screenWidth / 2) + (spriteWidth * offscreenBuffer);
+        // Grenzen berechnen
+        UpdateBoundaries();
 
-        // Prüfen ob genug Sprites vorhanden sind, um die Szene + Puffer zu füllen
+        // Prüfen ob genug Sprites vorhanden sind
         EnsureEnoughSprites();
 
         // Sprites positionieren
         ArrangeSpritesWithBuffer();
     }
 
+    private void UpdateBoundaries()
+    {
+        leftBoundary = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
+        rightBoundary = Camera.main.transform.position.x + (screenWidth / 2) + (spriteWidth * offscreenBuffer);
+    }
+
     private void EnsureEnoughSprites()
     {
-        // Berechnen, wie viele Sprites wir benötigen, um den Bildschirm + Puffer zu füllen
         float totalWidthNeeded = screenWidth + (2 * screenWidth * offscreenBuffer);
         int spritesNeeded = Mathf.CeilToInt(totalWidthNeeded / spriteWidth);
 
         while (sprites.Count < spritesNeeded)
         {
-            // Klone das erste Sprite und füge es zur Liste hinzu
             Transform newSprite = Instantiate(sprites[0], transform);
             sprites.Add(newSprite);
         }
@@ -71,20 +91,8 @@ public class ParallaxEffect : MonoBehaviour
 
     private void ArrangeSpritesWithBuffer()
     {
-        // Startposition ist links vom sichtbaren Bereich
         float startX = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
-
-        // Sprites von links nach rechts anordnen, mit Puffer außerhalb des sichtbaren Bereichs
-        for (int i = 0; i < sprites.Count; i++)
-        {
-            sprites[i].position = new Vector3(
-                startX + (i * spriteWidth),
-                sprites[i].position.y,
-                sprites[i].position.z
-            );
-        }
-
-        float overlap = spriteWidth * 0.05f; // 5% Überlappung
+        float overlap = enableOverlap ? spriteWidth * overlapPercentage : 0f;
 
         for (int i = 0; i < sprites.Count; i++)
         {
@@ -98,16 +106,19 @@ public class ParallaxEffect : MonoBehaviour
 
     private void Update()
     {
-        // Bewegungsgeschwindigkeit berechnen
-        float movement = scrollSpeed * parallaxStrength * Time.deltaTime;
+        // Mit GameManager synchronisieren, falls gewünscht
+        if (syncWithGameManager && GameManager.Instance != null)
+        {
+            // WICHTIGSTE ÄNDERUNG: Direkte Verwendung der GameManager-Geschwindigkeit
+            // statt einen Ratio zu berechnen, der zu Abweichungen führen kann
+            currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
+        }
 
-        // fps unabhängig
-        float smoothDeltaTime = Time.smoothDeltaTime;
+        // Bewegungsgeschwindigkeit berechnen (FPS-unabhängig)
+        float movement = currentScrollSpeed * Time.deltaTime;
 
-
-        // Grenzen aktualisieren basierend auf der aktuellen Kameraposition
-        leftBoundary = Camera.main.transform.position.x - (screenWidth / 2) - (spriteWidth * 0.5f);
-        rightBoundary = Camera.main.transform.position.x + (screenWidth / 2) + (spriteWidth * offscreenBuffer);
+        // Grenzen aktualisieren
+        UpdateBoundaries();
 
         // Alle Sprites bewegen
         foreach (var sprite in sprites)
@@ -115,15 +126,13 @@ public class ParallaxEffect : MonoBehaviour
             sprite.Translate(Vector3.left * movement);
             RepositionSpriteIfNeeded(sprite);
         }
-
     }
 
     private void RepositionSpriteIfNeeded(Transform sprite)
     {
-        // Wenn das Sprite zu weit links ist (komplett außerhalb des sichtbaren Bereichs + Puffer)
         if (sprite.position.x + (spriteWidth * 0.5f) < leftBoundary)
         {
-            // Finde die rechteste Position aller Sprites
+            // Finde die rechteste Position
             float rightmostX = -Mathf.Infinity;
             Transform rightmostSprite = null;
 
@@ -139,30 +148,46 @@ public class ParallaxEffect : MonoBehaviour
 
             if (rightmostSprite != null)
             {
-                // Platziere das Sprite direkt rechts vom aktuell rechtesten Sprite
+                float overlap = enableOverlap ? spriteWidth * overlapPercentage : 0f;
+
+                // Platziere das Sprite rechts vom rechtesten Sprite
                 sprite.position = new Vector3(
-                    rightmostSprite.position.x + spriteWidth,
+                    rightmostSprite.position.x + (spriteWidth - overlap),
                     sprite.position.y,
                     sprite.position.z
                 );
-
-                // Debug-Log, um die Repositionierung zu verfolgen
-                Debug.Log($"Sprite repositioniert: Von {leftBoundary} nach {sprite.position.x}");
             }
         }
     }
 
+    // Manuelle Steuerung der Scroll-Geschwindigkeit
     public void SetSpeed(float newSpeed)
     {
-        scrollSpeed = newSpeed;
+        // Direkte Setzung der Geschwindigkeit ohne weitere Multiplikation
+        currentScrollSpeed = newSpeed * parallaxStrength;
     }
 
-    // Nur für Debug-Zwecke
+    // Speed-Boost anwenden
+    public void ApplySpeedMultiplier(float multiplier)
+    {
+        // Direkte Multiplikation der Basis-Geschwindigkeit
+        currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
+        syncWithGameManager = true; // Automatische Synchronisierung beibehalten
+    }
+
+    // Zur Basis-Geschwindigkeit zurückkehren
+    public void ResetToBaseSpeed()
+    {
+        // Synchronisierung mit dem GameManager wiederherstellen
+        syncWithGameManager = true;
+        currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
+    }
+
+    // Debug-Visualisierung
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
 
-        // Grenzen visuell darstellen
         Gizmos.color = Color.red;
         Gizmos.DrawLine(
             new Vector3(leftBoundary, transform.position.y - 5, 0),
