@@ -153,6 +153,15 @@ public class CollisionDetection : MonoBehaviour
     {
         Debug.Log("Player died!");
         snapshot.TransitionTo(0);
-        SceneManager.LoadScene("GameOverScene");
+
+        // FALSCHE REIHENFOLGE:
+        // SceneManager.LoadScene("GameOverScene");
+        // ScoreManager.Instance.GameOver();
+
+        // RICHTIGE REIHENFOLGE:
+        ScoreManager.Instance.GameOver();
+        // Die GameOver-Methode ruft bereits SceneManager.LoadScene auf
     }
+
+
 }

@@ -7442,11 +7442,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c3b3fe2cb3a78448b373b49bd603e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeText: {fileID: 0}
+  timeText: {fileID: 1548741833}
   scoreText: {fileID: 1512555813}
   highscoreText: {fileID: 0}
   scoreIncreaseInterval: 1
   powerUpPoints: 5
+  gameOverSceneName: GameOverScene
+  maxHighscoreEntries: 10
+  highscoreEntryContainer: {fileID: 0}
+  highscoreEntryPrefab: {fileID: 1373052082708301114, guid: 4dc837df5e0171c40b480c7d86a16a93, type: 3}
 --- !u!4 &1957337484
 Transform:
   m_ObjectHideFlags: 0

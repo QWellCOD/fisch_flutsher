@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: 83c3b3fe2cb3a78448b373b49bd603e4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - timeText: {instanceID: 0}
+  - scoreText: {instanceID: 0}
+  - highscoreText: {instanceID: 0}
+  - highscoreEntryContainer: {instanceID: 0}
+  - highscoreEntryPrefab: {fileID: 1373052082708301114, guid: 4dc837df5e0171c40b480c7d86a16a93, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
