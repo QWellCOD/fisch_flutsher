@@ -97,7 +97,7 @@ public class ScoreManager : MonoBehaviour
 
         if (timeText == null && scoreText != null)
         {
-            Debug.LogWarning("TimeText nicht gefunden. Verwende vorhandenes ScoreText für die Zeit.");
+            Debug.LogWarning("TimeText not found. Using existing ScoreText for time.");
             timeText = scoreText;
         }
 
@@ -131,13 +131,13 @@ public class ScoreManager : MonoBehaviour
         }
 
         if (finalTimeText != null)
-            finalTimeText.text = $"Zeit: {FormatTime(currentTimeScore)}";
+            finalTimeText.text = $"Time: {FormatTime(currentTimeScore)}";
 
         if (finalScoreText != null)
-            finalScoreText.text = $"Punkte: {currentPointsScore}";
+            finalScoreText.text = $"Points: {currentPointsScore}";
 
         if (finalTotalScoreText != null)
-            finalTotalScoreText.text = $"Gesamtpunktzahl: {GetTotalScore()}";
+            finalTotalScoreText.text = $"Score: {GetTotalScore()}";
 
         UpdateHighscoreDisplay();
 
@@ -147,7 +147,7 @@ public class ScoreManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("HighscoreEntryContainer oder Prefab nicht gefunden. Highscore-Liste kann nicht angezeigt werden.");
+            Debug.LogWarning("HighscoreEntryContainer or Prefab not found. Highscore list cannot be displayed.");
         }
     }
 
@@ -222,13 +222,13 @@ public class ScoreManager : MonoBehaviour
     private void UpdateTimeDisplay()
     {
         if (timeText != null)
-            timeText.text = $"Zeit: {FormatTime(currentTimeScore)}";
+            timeText.text = $"Time: {FormatTime(currentTimeScore)}";
     }
 
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)
-            scoreText.text = $"Punkte: {currentPointsScore}";
+            scoreText.text = $"Points: {currentPointsScore}";
     }
 
     private void CheckHighscore()
@@ -283,7 +283,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (highscoreEntryContainer == null || highscoreEntryPrefab == null)
         {
-            Debug.LogError("Highscore-Container oder Prefab nicht gesetzt!");
+            Debug.LogError("Highscore container or prefab not set!");
             return;
         }
 
@@ -337,7 +337,7 @@ public class ScoreManager : MonoBehaviour
 
                 if (highScores == null || highScores.entries == null)
                 {
-                    Debug.LogWarning("Fehlerhafte Highscore-Liste geladen. Erstelle neue Liste.");
+                    Debug.LogWarning("Invalid highscore list loaded. Creating a new list.");
                     highScores = new HighScoreList();
                 }
 
@@ -349,7 +349,7 @@ public class ScoreManager : MonoBehaviour
             }
             catch (System.Exception e)
             {
-                Debug.LogError("Fehler beim Laden der Highscores: " + e.Message);
+                Debug.LogError("Error loading highscores: " + e.Message);
                 highScores = new HighScoreList();
             }
         }
@@ -359,9 +359,6 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-/// <summary>
-/// TODO: Überprüfen ob überhaupt notwendig!
-/// </summary>
     private void LoadHighscore()
     {
         highscore = PlayerPrefs.GetInt("Highscore", 0);

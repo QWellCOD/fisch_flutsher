@@ -77,7 +77,6 @@
     <Compile Include="Assets\Scripts\PowerUpSpawner.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\BackgroundManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\CollisionDetection.cs" />
   </ItemGroup>
