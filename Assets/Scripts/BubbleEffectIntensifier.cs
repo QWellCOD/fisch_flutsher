@@ -6,16 +6,16 @@ public class BubbleEffectIntensifier : MonoBehaviour
     [SerializeField] private ParticleSystem bubbleSystem;
 
     [Header("Verstärkungsparameter")]
-    [SerializeField] private float intensificationDuration = 60f; // Dauer in Sekunden bis zur maximalen Intensität
-    [SerializeField] private float startVelocityX = -1f; // Anfangsgeschwindigkeit
-    [SerializeField] private float maxVelocityX = -5f; // Maximale Geschwindigkeit
-    [SerializeField] private float startEmissionRate = 5f; // Anfängliche Blasen pro Sekunde
-    [SerializeField] private float maxEmissionRate = 15f; // Maximale Blasen pro Sekunde
-    [SerializeField] private float startStretchFactor = 1f; // Anfängliche Streckung
-    [SerializeField] private float maxStretchFactor = 3f; // Maximale Streckung
+    [SerializeField] private float intensificationDuration = 60f;
+    [SerializeField] private float startVelocityX = -1f;
+    [SerializeField] private float maxVelocityX = -5f;
+    [SerializeField] private float startEmissionRate = 5f;
+    [SerializeField] private float maxEmissionRate = 15f;
+    [SerializeField] private float startStretchFactor = 1f;
+    [SerializeField] private float maxStretchFactor = 3f;
 
     [Header("Verlaufskurve")]
-    [SerializeField] private AnimationCurve intensityCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // Wie sich der Effekt mit der Zeit verstärkt
+    [SerializeField] private AnimationCurve intensityCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     // Private Variablen
     private float timer = 0f;
@@ -46,7 +46,6 @@ public class BubbleEffectIntensifier : MonoBehaviour
         emissionModule = bubbleSystem.emission;
         particleRenderer = bubbleSystem.GetComponent<ParticleSystemRenderer>();
 
-        // Anfangswerte setzen
         SetVelocityX(startVelocityX);
         SetEmissionRate(startEmissionRate);
         SetStretchFactor(startStretchFactor);
@@ -58,19 +57,15 @@ public class BubbleEffectIntensifier : MonoBehaviour
     {
         if (!isInitialized) Initialize();
 
-        // Timer aktualisieren
         timer += Time.deltaTime;
         float normalizedTime = Mathf.Clamp01(timer / intensificationDuration);
 
-        // Intensität basierend auf der Kurve berechnen
         float intensity = intensityCurve.Evaluate(normalizedTime);
 
-        // Parameter interpolieren und anwenden
         float currentVelocityX = Mathf.Lerp(startVelocityX, maxVelocityX, intensity);
         float currentEmissionRate = Mathf.Lerp(startEmissionRate, maxEmissionRate, intensity);
         float currentStretchFactor = Mathf.Lerp(startStretchFactor, maxStretchFactor, intensity);
 
-        // Auf Particle System anwenden
         SetVelocityX(currentVelocityX);
         SetEmissionRate(currentEmissionRate);
         SetStretchFactor(currentStretchFactor);
@@ -97,7 +92,7 @@ public class BubbleEffectIntensifier : MonoBehaviour
         particleRenderer.velocityScale = value;
     }
 
-    // Optional: Methode zum manuellen Zurücksetzen des Effekts
+    //TODO: Auf Notwendigkeit überprüfen
     public void ResetIntensification()
     {
         timer = 0f;
@@ -106,7 +101,6 @@ public class BubbleEffectIntensifier : MonoBehaviour
         SetStretchFactor(startStretchFactor);
     }
 
-    // Optional: Methode zum sofortigen Setzen der maximalen Intensität
     public void SetMaxIntensity()
     {
         timer = intensificationDuration;

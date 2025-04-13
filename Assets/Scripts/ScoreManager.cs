@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-// Klasse für einen einzelnen Highscore-Eintrag
 [System.Serializable]
 public class HighScoreEntry
 {
@@ -21,7 +20,6 @@ public class HighScoreEntry
     }
 }
 
-// Klasse für die gesamte Highscore-Liste
 [System.Serializable]
 public class HighScoreList
 {
@@ -43,7 +41,12 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private string gameOverSceneName = "GameOverScene";
     [SerializeField] private int maxHighscoreEntries = 10;
 
-    // Highscore-Liste
+
+    [Header("Highscore UI References")]
+    [SerializeField] private Transform highscoreEntryContainer;
+    [SerializeField] private GameObject highscoreEntryPrefab;
+
+    private Dictionary<string, TMP_Text> uiTextCache = new Dictionary<string, TMP_Text>();
     private HighScoreList highScores = new HighScoreList();
 
     private int currentTimeScore;
@@ -51,13 +54,6 @@ public class ScoreManager : MonoBehaviour
     private int highscore;
     private float elapsedTime;
     private bool isGameActive = true;
-
-    [Header("Highscore UI References")]
-    [SerializeField] private Transform highscoreEntryContainer;
-    [SerializeField] private GameObject highscoreEntryPrefab;
-
-    // UI-Cache für bessere Performance
-    private Dictionary<string, TMP_Text> uiTextCache = new Dictionary<string, TMP_Text>();
 
     void Awake()
     {
@@ -79,17 +75,14 @@ public class ScoreManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // UI-Cache bei jedem Szenenwechsel leeren
         uiTextCache.Clear();
 
         if (scene.name == gameOverSceneName)
         {
-            // Game Over Scene geladen - UI mit Coroutine initialisieren
             StartCoroutine(InitializeGameOverUI());
         }
         else
         {
-            // Spielszene - normale UI initialisieren
             InitializeUIReferences();
             ResetScore();
             isGameActive = true;
@@ -98,12 +91,10 @@ public class ScoreManager : MonoBehaviour
 
     void InitializeUIReferences()
     {
-        // UI-Elemente finden und cachen
         timeText = FindAndCacheText("TimeText");
         scoreText = FindAndCacheText("ScoreText");
         highscoreText = FindAndCacheText("HighscoreText");
 
-        // Fallback für timeText
         if (timeText == null && scoreText != null)
         {
             Debug.LogWarning("TimeText nicht gefunden. Verwende vorhandenes ScoreText für die Zeit.");
@@ -117,21 +108,17 @@ public class ScoreManager : MonoBehaviour
 
     private IEnumerator InitializeGameOverUI()
     {
-        // Warte einen Frame, damit alle GameObjects vollständig geladen sind
         yield return null;
 
-        // UI-Elemente finden und cachen
         TMP_Text finalTimeText = FindAndCacheText("FinalTimeText");
         TMP_Text finalScoreText = FindAndCacheText("FinalScoreText");
         TMP_Text finalTotalScoreText = FindAndCacheText("FinalTotalScoreText");
         highscoreText = FindAndCacheText("HighscoreText");
 
-        // Suche nach dem Container für die Highscore-Einträge
         highscoreEntryContainer = GameObject.Find("HighscoreEntryContainer")?.transform;
 
         if (highscoreEntryContainer == null)
         {
-            // Versuche, Container über die Hierarchie zu finden
             Transform scrollView = GameObject.Find("HighscoreScrollView")?.transform;
             if (scrollView != null)
             {
@@ -143,7 +130,6 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
-        // Zeige die Werte an
         if (finalTimeText != null)
             finalTimeText.text = $"Zeit: {FormatTime(currentTimeScore)}";
 
@@ -155,7 +141,6 @@ public class ScoreManager : MonoBehaviour
 
         UpdateHighscoreDisplay();
 
-        // Highscore-Liste anzeigen, wenn Container gefunden wurde
         if (highscoreEntryContainer != null && highscoreEntryPrefab != null)
         {
             DisplayHighscores();
@@ -163,11 +148,9 @@ public class ScoreManager : MonoBehaviour
         else
         {
             Debug.LogWarning("HighscoreEntryContainer oder Prefab nicht gefunden. Highscore-Liste kann nicht angezeigt werden.");
-            DebugUIElements();
         }
     }
 
-    // Hilfsmethode zum Finden und Cachen von TextMeshPro-Texten
     private TMP_Text FindAndCacheText(string name)
     {
         if (uiTextCache.TryGetValue(name, out TMP_Text cachedText))
@@ -178,19 +161,6 @@ public class ScoreManager : MonoBehaviour
             uiTextCache[name] = text;
 
         return text;
-    }
-
-    // Zur Fehlersuche: UI-Elemente auflisten
-    private void DebugUIElements()
-    {
-        Canvas[] canvases = FindObjectsOfType<Canvas>();
-        Debug.Log($"Gefundene Canvases: {canvases.Length}");
-
-        foreach (Canvas canvas in canvases)
-        {
-            Debug.Log($"Canvas: {canvas.name}");
-            ListChildren(canvas.transform, 1);
-        }
     }
 
     private void ListChildren(Transform parent, int depth)
@@ -279,28 +249,22 @@ public class ScoreManager : MonoBehaviour
             highscoreText.text = $"Highscore: {highscore}";
     }
 
-    // Methode zum Hinzufügen eines neuen Highscore-Eintrags
     public void AddHighscoreEntry()
     {
-        // Neuen Eintrag erstellen
         HighScoreEntry entry = new HighScoreEntry(
             currentTimeScore,
             currentPointsScore
         );
 
-        // Wenn die Liste bereits voll ist und der neue Score niedriger als der niedrigste ist
         if (highScores.entries.Count >= maxHighscoreEntries &&
             highScores.entries[highScores.entries.Count - 1].totalScore >= entry.totalScore)
         {
-            // Nicht hinzufügen, da er nicht in die Top 20 kommt
             return;
         }
 
-        // Eintrag hinzufügen und sortieren
         highScores.entries.Add(entry);
         SortHighscores();
 
-        // Überschüssige Einträge entfernen
         while (highScores.entries.Count > maxHighscoreEntries)
         {
             highScores.entries.RemoveAt(highScores.entries.Count - 1);
@@ -310,13 +274,11 @@ public class ScoreManager : MonoBehaviour
     }
 
 
-    // Sortieren der Highscores (absteigend nach Gesamtpunktzahl)
     private void SortHighscores()
     {
         highScores.entries.Sort((a, b) => b.totalScore.CompareTo(a.totalScore));
     }
 
-    // Anzeigen der Highscore-Liste
     private void DisplayHighscores()
     {
         if (highscoreEntryContainer == null || highscoreEntryPrefab == null)
@@ -325,37 +287,29 @@ public class ScoreManager : MonoBehaviour
             return;
         }
 
-        // Bestehende Einträge löschen
         foreach (Transform child in highscoreEntryContainer)
         {
             Destroy(child.gameObject);
         }
 
-        // Anzahl der anzuzeigenden Einträge bestimmen
         int entriesToShow = Mathf.Min(maxHighscoreEntries, highScores.entries.Count);
 
-        // Einträge erstellen
         for (int i = 0; i < entriesToShow; i++)
         {
             HighScoreEntry entry = highScores.entries[i];
 
             GameObject entryGO = Instantiate(highscoreEntryPrefab, highscoreEntryContainer);
 
-            // Rang
             UpdateEntryText(entryGO, "RankText", (i + 1).ToString());
 
-            // Zeit
             UpdateEntryText(entryGO, "TimeText", FormatTime(entry.timeScore));
 
-            // Punkte
             UpdateEntryText(entryGO, "PointsText", entry.pointsScore.ToString());
 
-            // Gesamtpunktzahl
             UpdateEntryText(entryGO, "TotalScoreText", entry.totalScore.ToString());
         }
     }
 
-    // Hilfsmethode zur Aktualisierung eines Text-Elements im Highscore-Eintrag
     private void UpdateEntryText(GameObject entry, string childName, string value)
     {
         TMP_Text textComponent = entry.transform.Find(childName)?.GetComponent<TMP_Text>();
@@ -363,7 +317,6 @@ public class ScoreManager : MonoBehaviour
             textComponent.text = value;
     }
 
-    // Speichern der Highscores mit PlayerPrefs als JSON
     private void SaveHighscores()
     {
         string json = JsonUtility.ToJson(highScores);
@@ -371,13 +324,10 @@ public class ScoreManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Laden der Highscores aus PlayerPrefs
     private void LoadHighscores()
     {
-        // Einzelnen Highscore für Kompatibilität laden
         highscore = PlayerPrefs.GetInt("Highscore", 0);
 
-        // Highscore-Liste laden
         if (PlayerPrefs.HasKey("Highscores"))
         {
             string json = PlayerPrefs.GetString("Highscores");
@@ -385,14 +335,12 @@ public class ScoreManager : MonoBehaviour
             {
                 highScores = JsonUtility.FromJson<HighScoreList>(json);
 
-                // Falls etwas mit der Liste nicht stimmt
                 if (highScores == null || highScores.entries == null)
                 {
                     Debug.LogWarning("Fehlerhafte Highscore-Liste geladen. Erstelle neue Liste.");
                     highScores = new HighScoreList();
                 }
 
-                // Falls mehr als maxHighscoreEntries vorhanden sind, überschüssige entfernen
                 SortHighscores();
                 while (highScores.entries.Count > maxHighscoreEntries)
                 {
@@ -411,7 +359,9 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-
+/// <summary>
+/// TODO: Überprüfen ob überhaupt notwendig!
+/// </summary>
     private void LoadHighscore()
     {
         highscore = PlayerPrefs.GetInt("Highscore", 0);
@@ -432,15 +382,12 @@ public class ScoreManager : MonoBehaviour
     {
         isGameActive = false;
 
-        // Highscore aktualisieren und speichern
         CheckHighscore();
         AddHighscoreEntry();
 
-        // Zur GameOver-Szene wechseln
         SceneManager.LoadScene(gameOverSceneName);
     }
 
-    // Methoden zum Sortieren der Highscore-Liste nach verschiedenen Kriterien
     public void SortByTotalScore(bool ascending = false)
     {
         highScores.entries.Sort((a, b) => ascending ?
@@ -468,7 +415,7 @@ public class ScoreManager : MonoBehaviour
         DisplayHighscores();
     }
 
-    // UI-Referenzen extern setzen (für Kommunikation mit GameOverScene)
+    // ui references for highscore entry container and prefab to comunicate with other scenes
     public void SetHighscoreUIReferences(Transform container, GameObject prefab)
     {
         if (container != null)

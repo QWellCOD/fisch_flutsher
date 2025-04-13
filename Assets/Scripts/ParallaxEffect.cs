@@ -4,14 +4,14 @@ using System.Collections.Generic;
 public class ParallaxEffect : MonoBehaviour
 {
     [Header("Scroll-Einstellungen")]
-    [SerializeField] private float baseScrollSpeed = 5f; // Basis-Geschwindigkeit
+    [SerializeField] private float baseScrollSpeed = 5f;
     [SerializeField][Range(0f, 1f)] private float parallaxStrength = 1f;
-    [SerializeField] private bool syncWithGameManager = true; // Automatische Synchronisierung
+    [SerializeField] private bool syncWithGameManager = true;
 
     [Header("Layout-Einstellungen")]
     [SerializeField] private float offscreenBuffer = 1.5f;
     [SerializeField] private bool enableOverlap = true;
-    [SerializeField] private float overlapPercentage = 0.05f; // 5% Überlappung
+    [SerializeField] private float overlapPercentage = 0.05f;
 
     private float currentScrollSpeed;
     private float spriteWidth;
@@ -22,16 +22,13 @@ public class ParallaxEffect : MonoBehaviour
 
     private void Awake()
     {
-        // Basis-Initialwerte setzen
         currentScrollSpeed = baseScrollSpeed;
 
-        // Sprites initialisieren
         InitializeSprites();
     }
 
     private void Start()
     {
-        // Initialen Wert vom GameManager holen
         if (syncWithGameManager && GameManager.Instance != null)
         {
             currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
@@ -40,7 +37,6 @@ public class ParallaxEffect : MonoBehaviour
 
     private void InitializeSprites()
     {
-        // Alle Kind-Sprites sammeln
         for (int i = 0; i < transform.childCount; i++)
         {
             sprites.Add(transform.GetChild(i));
@@ -52,20 +48,15 @@ public class ParallaxEffect : MonoBehaviour
             return;
         }
 
-        // Breite des ersten Sprites ermitteln
         spriteWidth = sprites[0].GetComponent<SpriteRenderer>().bounds.size.x;
 
-        // Kamera-Breite berechnen
         screenWidth = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x -
                       Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
 
-        // Grenzen berechnen
         UpdateBoundaries();
 
-        // Prüfen ob genug Sprites vorhanden sind
         EnsureEnoughSprites();
 
-        // Sprites positionieren
         ArrangeSpritesWithBuffer();
     }
 
@@ -106,21 +97,15 @@ public class ParallaxEffect : MonoBehaviour
 
     private void Update()
     {
-        // Mit GameManager synchronisieren, falls gewünscht
         if (syncWithGameManager && GameManager.Instance != null)
         {
-            // WICHTIGSTE ÄNDERUNG: Direkte Verwendung der GameManager-Geschwindigkeit
-            // statt einen Ratio zu berechnen, der zu Abweichungen führen kann
             currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
         }
 
-        // Bewegungsgeschwindigkeit berechnen (FPS-unabhängig)
         float movement = currentScrollSpeed * Time.deltaTime;
 
-        // Grenzen aktualisieren
         UpdateBoundaries();
 
-        // Alle Sprites bewegen
         foreach (var sprite in sprites)
         {
             sprite.Translate(Vector3.left * movement);
@@ -132,7 +117,6 @@ public class ParallaxEffect : MonoBehaviour
     {
         if (sprite.position.x + (spriteWidth * 0.5f) < leftBoundary)
         {
-            // Finde die rechteste Position
             float rightmostX = -Mathf.Infinity;
             Transform rightmostSprite = null;
 
@@ -150,7 +134,6 @@ public class ParallaxEffect : MonoBehaviour
             {
                 float overlap = enableOverlap ? spriteWidth * overlapPercentage : 0f;
 
-                // Platziere das Sprite rechts vom rechtesten Sprite
                 sprite.position = new Vector3(
                     rightmostSprite.position.x + (spriteWidth - overlap),
                     sprite.position.y,
@@ -160,30 +143,24 @@ public class ParallaxEffect : MonoBehaviour
         }
     }
 
-    // Manuelle Steuerung der Scroll-Geschwindigkeit
     public void SetSpeed(float newSpeed)
     {
-        // Direkte Setzung der Geschwindigkeit ohne weitere Multiplikation
         currentScrollSpeed = newSpeed * parallaxStrength;
     }
 
-    // Speed-Boost anwenden
     public void ApplySpeedMultiplier(float multiplier)
     {
-        // Direkte Multiplikation der Basis-Geschwindigkeit
         currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
-        syncWithGameManager = true; // Automatische Synchronisierung beibehalten
+        syncWithGameManager = true;
     }
 
-    // Zur Basis-Geschwindigkeit zurückkehren
     public void ResetToBaseSpeed()
     {
-        // Synchronisierung mit dem GameManager wiederherstellen
         syncWithGameManager = true;
         currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
     }
 
-    // Debug-Visualisierung
+    // debug visualization
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;

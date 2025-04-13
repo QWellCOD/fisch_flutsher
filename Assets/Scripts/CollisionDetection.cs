@@ -6,7 +6,6 @@ using UnityEngine.Audio;
 public class CollisionDetection : MonoBehaviour
 {
     [Header("UI References")]
-    //public GameObject gameOverScreen;
     public GameObject shieldVisual;
 
     [Header("Settings")]
@@ -143,24 +142,13 @@ public class CollisionDetection : MonoBehaviour
         if (shieldVisual) shieldVisual.SetActive(false);
     }
 
-
-
-    /// <summary>
-    /// This method triggers the game over sequence.
-    /// It activates the game over screen and pauses the game by setting the time scale to 0.
-    /// </summary>
     private void TriggerGameOver()
     {
         Debug.Log("Player died!");
         snapshot.TransitionTo(0);
 
-        // FALSCHE REIHENFOLGE:
-        // SceneManager.LoadScene("GameOverScene");
-        // ScoreManager.Instance.GameOver();
-
-        // RICHTIGE REIHENFOLGE:
         ScoreManager.Instance.GameOver();
-        // Die GameOver-Methode ruft bereits SceneManager.LoadScene auf
+
     }
 
 

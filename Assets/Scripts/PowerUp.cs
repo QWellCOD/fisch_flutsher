@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    // PowerUp-Typen als Enum definieren
     public enum PowerUpType
     {
         Shield,
@@ -16,13 +15,11 @@ public class PowerUp : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // Punkte zum Score hinzufügen
             if (ScoreManager.Instance != null)
             {
                 ScoreManager.Instance.AddPowerUpPoints();
             }
 
-            // PowerUp-Effekt direkt über CollisionDetection anwenden
             CollisionDetection collisionDetection = collision.GetComponent<CollisionDetection>();
             if (collisionDetection != null)
             {
@@ -40,7 +37,6 @@ public class PowerUp : MonoBehaviour
                 Debug.LogError("Keine CollisionDetection-Komponente am Player gefunden!");
             }
 
-            // PowerUp zerstören
             Destroy(gameObject);
         }
     }
