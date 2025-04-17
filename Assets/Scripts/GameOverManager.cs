@@ -9,7 +9,6 @@ public class GameOverManager : MonoBehaviour
         Debug.Log("Restart Game button clicked! Loading Game Scene...");
         snapshot.TransitionTo(0);
         Time.timeScale = 1;
-        //GameManager.Instance.ResetSpeed();
         SceneManager.LoadScene("GameScene");
     }
     public void ReturnToMainMenu(AudioMixerSnapshot snapshot)
@@ -17,7 +16,6 @@ public class GameOverManager : MonoBehaviour
         Debug.Log("Main Menu button clicked! Loading Home Scene...");
         snapshot.TransitionTo(0);
         Time.timeScale = 1;
-        //GameManager.Instance.ResetSpeed();
         SceneManager.LoadScene("HomeScene");
     }
 }
