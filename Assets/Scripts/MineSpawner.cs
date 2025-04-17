@@ -81,8 +81,8 @@ public class MineSpawner : MonoBehaviour
 
         if (showDebugInfo)
         {
-            Debug.Log($"Hindernis gespawnt bei Position: {spawnPosition}, " +
-                      $"Aktuelles Intervall: {currentObstacleSpawnTime:F2}s");
+            Debug.Log($"Obstacle spawned at position: {spawnPosition}, " +
+                      $"Current interval: {currentObstacleSpawnTime:F2}s");
         }
     }
 
