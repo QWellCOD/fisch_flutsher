@@ -72,13 +72,6 @@ public class GameManager : MonoBehaviour
 
         CurrentMoveSpeed = baseMoveSpeed * multiplier;
 
-        //TODO: Überprüfen ob das noch benötigt wird
-        // ParallaxEffect[] parallaxEffects = FindObjectsOfType<ParallaxEffect>();
-        // foreach (var effect in parallaxEffects)
-        // {
-        //     effect.SetSpeed(CurrentMoveSpeed);
-        // }
-
         Debug.Log($"Game speed boosted from {baseMoveSpeed} to {CurrentMoveSpeed}");
     }
 

@@ -372,8 +372,8 @@ GameObject:
   - component: {fileID: 313944917}
   - component: {fileID: 313944918}
   - component: {fileID: 313944921}
-  - component: {fileID: 313944916}
   - component: {fileID: 313944920}
+  - component: {fileID: 313944916}
   - component: {fileID: 313944922}
   m_Layer: 7
   m_Name: GFX

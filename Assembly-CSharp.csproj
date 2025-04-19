@@ -73,7 +73,6 @@
     <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\BackgroundMusic.cs" />
     <Compile Include="Assets\Scripts\ParallaxEffect.cs" />
-    <Compile Include="Assets\Scripts\BubbleEffectIntensifier.cs" />
     <Compile Include="Assets\Scripts\PowerUpSpawner.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
