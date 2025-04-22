@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 public class ParallaxEffect : MonoBehaviour
 {
-    [Header("Scroll-Einstellungen")]
+    [Header("Scroll-Settings")]
     [SerializeField] private float baseScrollSpeed = 5f;
     [SerializeField][Range(0f, 1f)] private float parallaxStrength = 1f;
     [SerializeField] private bool syncWithGameManager = true;
 
-    [Header("Layout-Einstellungen")]
+    [Header("Layout-Settings")]
     [SerializeField] private float offscreenBuffer = 1.5f;
     [SerializeField] private bool enableOverlap = true;
     [SerializeField] private float overlapPercentage = 0.05f;
@@ -44,7 +44,7 @@ public class ParallaxEffect : MonoBehaviour
 
         if (sprites.Count == 0)
         {
-            Debug.LogError("Keine Sprites für Parallax-Effekt gefunden!");
+            Debug.LogError("No sprites found for parallax effect!");
             return;
         }
 
@@ -77,7 +77,7 @@ public class ParallaxEffect : MonoBehaviour
             sprites.Add(newSprite);
         }
 
-        Debug.Log($"Benötige {spritesNeeded} Sprites für den Hintergrund, {sprites.Count} vorhanden.");
+        Debug.Log($"Need {spritesNeeded} sprites for the background, {sprites.Count} available.");
     }
 
     private void ArrangeSpritesWithBuffer()
@@ -160,7 +160,6 @@ public class ParallaxEffect : MonoBehaviour
         currentScrollSpeed = GameManager.Instance.CurrentMoveSpeed * parallaxStrength;
     }
 
-    // debug visualization
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;

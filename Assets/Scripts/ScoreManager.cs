@@ -11,7 +11,6 @@ public class HighScoreEntry
     public int pointsScore;
     public int totalScore;
 
-    // Konstruktor
     public HighScoreEntry(int time, int points)
     {
         timeScore = time;
@@ -57,7 +56,7 @@ public class ScoreManager : MonoBehaviour
 
     void Awake()
     {
-        // Singleton-Pattern implementieren
+        // Singleton-Pattern
         if (Instance == null)
         {
             Instance = this;
@@ -412,7 +411,6 @@ public class ScoreManager : MonoBehaviour
         DisplayHighscores();
     }
 
-    // ui references for highscore entry container and prefab to comunicate with other scenes
     public void SetHighscoreUIReferences(Transform container, GameObject prefab)
     {
         if (container != null)

@@ -8,8 +8,8 @@ public class PowerUp : MonoBehaviour
         SpeedBoost
     }
 
-    [SerializeField] public PowerUpType powerUpType; // Typ des PowerUps
-    [SerializeField] public float duration = 5f; // Dauer des PowerUp-Effekts
+    [SerializeField] public PowerUpType powerUpType;
+    [SerializeField] public float duration = 5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -34,7 +34,7 @@ public class PowerUp : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Keine CollisionDetection-Komponente am Player gefunden!");
+                Debug.LogError("No CollisionDetection component found on the Player!");
             }
 
             Destroy(gameObject);

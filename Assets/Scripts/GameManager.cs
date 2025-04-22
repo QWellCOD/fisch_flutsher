@@ -80,12 +80,11 @@ public class GameManager : MonoBehaviour
         CurrentMoveSpeed = baseMoveSpeed;
         isSpeedBoosted = false;
 
-        //TODO: Überprüfen ob das noch benötigt wird
-        ParallaxEffect[] parallaxEffects = FindObjectsOfType<ParallaxEffect>();
-        foreach (var effect in parallaxEffects)
-        {
-            effect.SetSpeed(baseMoveSpeed);
-        }
+        // ParallaxEffect[] parallaxEffects = FindObjectsOfType<ParallaxEffect>();
+        // foreach (var effect in parallaxEffects)
+        // {
+        //     effect.SetSpeed(baseMoveSpeed);
+        // }
 
         Debug.Log($"Game speed reset to {baseMoveSpeed}");
     }

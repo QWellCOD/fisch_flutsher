@@ -94,7 +94,7 @@ public class MineSpawner : MonoBehaviour
 
         if (showDebugInfo)
         {
-            Debug.Log($"Spawn-Rate beschleunigt. Neues Intervall: {currentObstacleSpawnTime:F2}s");
+            Debug.Log($"Spawn rate accelerated. New interval: {currentObstacleSpawnTime:F2}s");
         }
     }
 
@@ -105,7 +105,7 @@ public class MineSpawner : MonoBehaviour
 
         if (showDebugInfo)
         {
-            Debug.Log("Spawn-Rate zurückgesetzt.");
+            Debug.Log("Spawn rate reset.");
         }
     }
 }
