@@ -4,7 +4,6 @@
 
 [![C#](https://img.shields.io/badge/C%23-8.0%2B-blue)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 [![Unity](https://img.shields.io/badge/Unity-2021.3.24f1-blue)](https://unity.com/releases/editor/whats-new/2021.3.24)
-[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-green)](
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Concept
