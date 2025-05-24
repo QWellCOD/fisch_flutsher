@@ -3,7 +3,7 @@
 ### A Simple 2D Ocean Racing Game Made with Unity
 
 [![C#](https://img.shields.io/badge/C%23-8.0%2B-blue)](https://docs.microsoft.com/en-us/dotnet/csharp/)
-[![Unity](https://img.shields.io/badge/Unity-2021.3.24f1-blue)](https://unity.com/releases/editor/whats-new/2021.3.24)
+[![Unity](https://img.shields.io/badge/Unity-6000.1.4-blue)](https://unity.com/releases/editor/whats-new/6000.1.4)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Concept
