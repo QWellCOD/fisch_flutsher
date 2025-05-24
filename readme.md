@@ -2,6 +2,11 @@
 
 ### A Simple 2D Ocean Racing Game Made with Unity
 
+[![C#](https://img.shields.io/badge/C%23-8.0%2B-blue)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+[![Unity](https://img.shields.io/badge/Unity-2021.3.24f1-blue)](https://unity.com/releases/editor/whats-new/2021.3.24)
+[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-green)](
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Concept
 
 Fish Flutscher is a fast-paced 2D arcade game set in the ocean, where you guide a fish through an endless underwater world. The goal is to survive as long as possible by skillfully dodging obstacles, collecting power-ups, and achieving the highest score. The gameplay combines smooth, physics-based movement with challenging enemy obstacles and special feature objects that grant unique abilities, making each run dynamic and engaging.
